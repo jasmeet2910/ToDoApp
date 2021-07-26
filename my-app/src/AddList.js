@@ -19,7 +19,6 @@ const AddList = () => {
               id: Math.random(),
           }])
           setTextValue("")
-          console.log('list', list);
         }
     }
     return (
