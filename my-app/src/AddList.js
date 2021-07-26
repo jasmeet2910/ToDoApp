@@ -11,9 +11,7 @@ const AddList = () => {
     }
 
     const handleKeyDown = (e) => {
-        debugger;
         if (e.key === 'Enter') {
-          console.log('do validate');
           setList([...list , {
               name: textValue,
               id: Math.random(),
@@ -22,19 +20,16 @@ const AddList = () => {
         }
     }
     return (
-        <div>
-          <input type="text"  id = "inputField" name= "name"  value={textValue} onChange={handleChange} onKeyPress={handleKeyDown}>
-          </input>
+        <>
+          <input type="text"  id = "inputField" name= "name"  value={textValue} onChange={handleChange} onKeyPress={handleKeyDown} />
           {
-              list.map((ls, index) => {
+              list.map((ls) => {
                 return (
                     <div key={ls.id} style={{border:'2px solid red'}}>{ls.name}</div>
                 )
-              })
-
-          
+              })      
 }
-    </div>
+    </>
   );
 }
 
