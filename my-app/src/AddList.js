@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo   from './cross-svgrepo-com.svg'
 
 
@@ -13,21 +13,37 @@ const AddList = () => {
     }
 
     const handleKeyDown = (e) => {
+      let uniqueId = Math.random();
         if (e.key === 'Enter') {
+          localStorage.setItem('ToDoList', JSON.stringify([...list , {
+            name: textValue,
+            id: uniqueId,
+        }]))
           setList([...list , {
               name: textValue,
-              id: Math.random(),
+              id: uniqueId,
           }])
           setTextValue("")
         }
     }
 
     const deleteList = (id) => {
-      const removedListItem = list.find((ls) => ls.id=== id)
+      //const removedListItem = list.find((ls) => ls.id=== id)
+      //list.indexOf(removedListItem)
+      let indexNumberTObeDeleted = list.findIndex((ls) => ls.id === id)
+      list.splice(indexNumberTObeDeleted,1)
+      localStorage.setItem('ToDoList', JSON.stringify([...list]))
       //setList(list.filter((ls) => ls.id !== removedListItem.id))
-      let newList = list.filter(ls => ls.id !== removedListItem.id);
-      setList(newList);
+      //let newList = list.filter(ls => ls.id !== removedListItem.id);
+      setList([...list]); // if same array i.e list needs to be set to setList we need to destructure it by spread operator enclosing within an array. or else follow line num 33.
     }
+   
+     useEffect(() => {
+      var stoargeList = JSON.parse(localStorage.getItem('ToDoList'));
+      if (stoargeList !== null) {
+      setList([...stoargeList]);
+      }
+    },[]) // on mount/ refersh case
     return (
         <>
           <input type="text"  id = "inputField" name= "name"  value={textValue} onChange={handleChange} onKeyPress={handleKeyDown} />
