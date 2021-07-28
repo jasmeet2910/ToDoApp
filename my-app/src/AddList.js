@@ -8,6 +8,13 @@ const AddList = () => {
     const [textValue, setTextValue] = React.useState("");
     const [list, setList] = React.useState([]);
 
+    useEffect(() => {
+      var stoargeList = JSON.parse(localStorage.getItem('ToDoList'));
+      if (stoargeList !== null) {
+      setList([...stoargeList]);
+      }
+    },[]) // on mount/ refersh case
+
     const handleChange = (e) => {
         setTextValue(e.target.value)
     }
@@ -37,13 +44,7 @@ const AddList = () => {
       //let newList = list.filter(ls => ls.id !== removedListItem.id);
       setList([...list]); // if same array i.e list needs to be set to setList we need to destructure it by spread operator enclosing within an array. or else follow line num 33.
     }
-   
-     useEffect(() => {
-      var stoargeList = JSON.parse(localStorage.getItem('ToDoList'));
-      if (stoargeList !== null) {
-      setList([...stoargeList]);
-      }
-    },[]) // on mount/ refersh case
+
     return (
         <>
           <input type="text"  id = "inputField" name= "name"  value={textValue} onChange={handleChange} onKeyPress={handleKeyDown} />
